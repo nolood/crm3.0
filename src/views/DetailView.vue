@@ -36,17 +36,15 @@ export default {
     record: null,
     loading: true,
   }),
-  mounted() {
-    setTimeout(async () => {
-      const { id } = this.$route.params;
-      const record = await this.$store.dispatch('fetchRecordById', id);
-      const category = await this.$store.dispatch('fetchCategoryById', record.categoryId);
-      this.record = {
-        ...record,
-        categoryName: category.title,
-      };
-      this.loading = false;
-    }, 1000);
+  async mounted() {
+    const { id } = this.$route.params;
+    const record = await this.$store.dispatch('fetchRecordById', id);
+    const category = await this.$store.dispatch('fetchCategoryById', record.categoryId);
+    this.record = {
+      ...record,
+      categoryName: category.title,
+    };
+    this.loading = false;
   },
 };
 </script>

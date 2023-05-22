@@ -89,11 +89,9 @@ export default defineComponent({
     categories: [],
     loading: true,
   }),
-  mounted() {
-    setTimeout(async () => {
-      this.categories = await this.$store.dispatch('fetchCategories');
-      this.loading = false;
-    }, 1000);
+  async mounted() {
+    this.categories = await this.$store.dispatch('fetchCategories');
+    this.loading = false;
   },
   setup(props) {
     const store = useStore();

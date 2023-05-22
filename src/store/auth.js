@@ -40,10 +40,18 @@ export default {
         throw e;
       }
     },
-    getUid() {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      return user ? user.uid : null;
+    async getUid() {
+      return new Promise((resolve, reject) => {
+        const auth = getAuth();
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          unsubscribe();
+          if (user) {
+            resolve(user.uid);
+          } else {
+            resolve(null);
+          }
+        }, reject);
+      });
     },
     async logout({ commit }) {
       const auth = getAuth();

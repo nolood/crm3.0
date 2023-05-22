@@ -51,6 +51,12 @@ const routes = [
     meta: { layout: 'main', auth: true },
     component: () => import('@/views/DetailView.vue'),
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    meta: { layout: 'main', auth: true },
+    component: () => import('@/views/ProfileView.vue'),
+  },
 ];
 
 const router = createRouter({

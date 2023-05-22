@@ -54,10 +54,8 @@ export default {
     //     this.categories = [...Object.values(categories)];
     //   },
     // );
-    setTimeout(async () => {
-      this.categories = await this.$store.dispatch('fetchCategories');
-      this.loading = false;
-    }, 1000);
+    this.categories = await this.$store.dispatch('fetchCategories');
+    this.loading = false;
   },
 };
 </script>

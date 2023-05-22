@@ -22,20 +22,18 @@ export default {
     records: [],
     categories: [],
   }),
-  mounted() {
-    setTimeout(async () => {
-      // this.records = await this.$store.dispatch('fetchRecords');
-      this.categories = await this.$store.dispatch('fetchCategories');
-      const records = await this.$store.dispatch('fetchRecords');
-      this.records = records.map((record, index) => ({
-        ...record,
-        index: index + 1,
-        categoryName: this.categories.find((c) => c.id === record.categoryId).title,
-        typeColor: record.type === 'income' ? 'green' : 'red',
-        typeText: record.type === 'income' ? 'Доход' : 'Расход',
-      }));
-      this.loading = false;
-    }, 1000);
+  async mounted() {
+    // this.records = await this.$store.dispatch('fetchRecords');
+    this.categories = await this.$store.dispatch('fetchCategories');
+    const records = await this.$store.dispatch('fetchRecords');
+    this.records = records.map((record, index) => ({
+      ...record,
+      index: index + 1,
+      categoryName: this.categories.find((c) => c.id === record.categoryId).title,
+      typeColor: record.type === 'income' ? 'green' : 'red',
+      typeText: record.type === 'income' ? 'Доход' : 'Расход',
+    }));
+    this.loading = false;
   },
 };
 </script>
