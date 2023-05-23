@@ -3,7 +3,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
-  createUserWithEmailAndPassword,
+  createUserWithEmailAndPassword, onAuthStateChanged,
 } from 'firebase/auth';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getDatabase, ref, set } from 'firebase/database';
@@ -41,17 +41,29 @@ export default {
       }
     },
     async getUid() {
-      return new Promise((resolve, reject) => {
-        const auth = getAuth();
-        const unsubscribe = auth.onAuthStateChanged((user) => {
+      // return new Promise((resolve, reject) => {
+      //   const auth = getAuth();
+      //   const unsubscribe = auth.onAuthStateChanged((user) => {
+      //     unsubscribe();
+      //     if (user) {
+      //       resolve(user.uid);
+      //     } else {
+      //       resolve(null);
+      //     }
+      //   }, reject);
+      // });
+      const auth = getAuth();
+      const user = await new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(auth, (userObj) => {
           unsubscribe();
-          if (user) {
-            resolve(user.uid);
+          if (userObj) {
+            resolve(userObj.uid);
           } else {
             resolve(null);
           }
         }, reject);
       });
+      return user;
     },
     async logout({ commit }) {
       const auth = getAuth();
